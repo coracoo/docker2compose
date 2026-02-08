@@ -3,6 +3,7 @@ name: Docker Build and Push
 on:
   push:
     tags:
+      - "v*.*"
       - "v*.*.*"
   workflow_dispatch:
 
@@ -10,6 +11,7 @@ env:
   IMAGE_NAME: docker2compose
   DOCKERFILE: ./Dockerfile
   PLATFORMS: linux/amd64,linux/arm64,linux/arm/v7
+  DEFAULT_BRANCH: master
 
 jobs:
   build:
@@ -53,7 +55,9 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
+            type=ref,event=tag
             type=sha
+            type=raw,value=latest,enable={{is_default_branch}}
       
       # 构建和推送
       - name: Build and push
