@@ -32,6 +32,8 @@ RUN echo "deb http://mirrors.aliyun.com/debian/ bookworm main non-free contrib" 
     && apt-get install -y --no-install-recommends \
         docker-ce-cli \
         docker-compose-plugin \
+        build-essential \
+        gcc \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
