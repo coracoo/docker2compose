@@ -14,9 +14,10 @@ def load_config():
     
     # 默认配置
     default_config = {
-        'NAS': 'debian',
         'CRON': 'once',
         'NETWORK': 'true',
+        'SHOW_COMMAND': 'true',
+        'SHOW_ENTRYPOINT': 'true',
         'TZ': 'Asia/Shanghai'
     }
     
@@ -34,9 +35,10 @@ def load_config():
     
     # 如果配置文件不存在或读取失败，从环境变量读取
     config = {
-        'NAS': os.getenv('NAS', default_config['NAS']),
         'CRON': os.getenv('CRON', default_config['CRON']),
         'NETWORK': os.getenv('NETWORK', default_config['NETWORK']),
+        'SHOW_COMMAND': os.getenv('SHOW_COMMAND', default_config['SHOW_COMMAND']),
+        'SHOW_ENTRYPOINT': os.getenv('SHOW_ENTRYPOINT', default_config['SHOW_ENTRYPOINT']),
         'TZ': os.getenv('TZ', default_config['TZ'])
     }
     print("从环境变量加载配置")
@@ -56,12 +58,14 @@ def ensure_config_file():
     if not os.path.exists(config_file):
         default_config = {
             "// 配置说明": "以下是D2C的配置选项",
-            "// NAS": "指定NAS系统类型: debian(默认,生成完整配置) 或 zos(极空间系统,不生成command和entrypoint)",
-            "NAS": "debian",
             "// CRON": "定时执行配置,使用标准cron表达式,如'0 2 * * *'(每天凌晨2点),'once'(执行一次后退出)",
             "CRON": "once",
             "// NETWORK": "控制bridge网络配置的显示方式: true(显示) 或 false(隐藏)",
             "NETWORK": "true",
+            "// SHOW_COMMAND": "控制command配置的显示方式: true(显示) 或 false(隐藏)",
+            "SHOW_COMMAND": "true",
+            "// SHOW_ENTRYPOINT": "控制entrypoint配置的显示方式: true(显示) 或 false(隐藏)",
+            "SHOW_ENTRYPOINT": "true",
             "// TZ": "时区设置,如Asia/Shanghai、Europe/London等",
             "TZ": "Asia/Shanghai"
         }
@@ -256,9 +260,10 @@ def convert_container_to_service(container):
         
     # 获取配置
     config = load_config()
-    nas_env = config['NAS'].lower()
     network_env = config['NETWORK'].lower() == 'true'
-    print(f"列出配置信息:1.系统版本是：{nas_env};2.网络环境变量是：{network_env};")
+    show_command = config.get('SHOW_COMMAND', 'true').lower() == 'true'
+    show_entrypoint = config.get('SHOW_ENTRYPOINT', 'true').lower() == 'true'
+    print(f"配置信息: NETWORK={network_env}, SHOW_COMMAND={show_command}, SHOW_ENTRYPOINT={show_entrypoint}")
 
     # 输出容器信息
     # print(f"容器信息:{container}")
@@ -566,20 +571,19 @@ def convert_container_to_service(container):
             service['deploy'] = deploy
     '''
     
-    # 获取容器的command和entrypoint配置，ZOS系统不执行
-    if nas_env != 'zos':
-        # 获取容器的entrypoint和command配置
+    # 获取容器的entrypoint配置（根据配置判断是否显示）
+    if show_entrypoint:
         entrypoint_config = container['Config'].get('Entrypoint')
-        cmd_config = container['Config'].get('Cmd')
-        
-        # 处理entrypoint配置
         if entrypoint_config:
             if len(entrypoint_config) == 1:
                 service['entrypoint'] = entrypoint_config[0]
             else:
                 service['entrypoint'] = entrypoint_config
-        
-        # 处理command配置，但要避免与entrypoint重复
+    
+    # 获取容器的command配置（根据配置判断是否显示）
+    if show_command:
+        cmd_config = container['Config'].get('Cmd')
+        entrypoint_config = container['Config'].get('Entrypoint')
         if cmd_config:
             # 检查command是否与entrypoint相同，如果相同则不设置command
             if entrypoint_config and cmd_config == entrypoint_config:

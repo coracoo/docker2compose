@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  docker2compose:
+    image: coracoo/docker2compose:latest
+    container_name: docker2compose 
+    ports:
+      - "5000:5000" 
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # 配置目录
+      - ./config:/app/config
+      # 输出目录（生成的 compose 文件）
+      - ./compose:/app/compose
+      # 日志目录
+      - ./logs:/app/logs
+    environment:
+      # 时区设置
+      - TZ=Asia/Shanghai
+      # 可选：默认配置（会被 config.json 覆盖）
+      - CRON=once
+      - NETWORK=true
+      - SHOW_HEALTHCHECK=true
+      - SHOW_CAP_ADD=true
+      - SHOW_COMMAND=true
+      - SHOW_ENTRYPOINT=true
+      - ENV_FILTER_KEYWORDS= "VERSION"
+    restart: unless-stopped

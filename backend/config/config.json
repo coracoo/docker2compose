@@ -1,11 +1,19 @@
 {
   "// 配置说明": "以下是D2C的配置选项",
-  "// NAS": "指定NAS系统类型: debian(默认,生成完整配置) 或 zos(极空间系统,不生成command和entrypoint)",
-  "NAS": "debian",
-  "// CRON": "定时执行配置,使用标准cron表达式,如'0 2 * * *'(每天凌晨2点),'once'(执行一次后退出)。支持6位格式(秒 分 时 日 月 周)",
-  "CRON": "once",
+  "// CRON": "定时执行配置: '0 2 * * *'(每天凌晨2点), 'manual'(手动), 'once'(执行一次), 或自定义CRON",
+  "CRON": "0 2 * * *",
   "// NETWORK": "控制bridge网络配置的显示方式: true(显示) 或 false(隐藏)",
   "NETWORK": "true",
+  "// SHOW_HEALTHCHECK": "控制healthcheck配置的显示方式: true(显示) 或 false(隐藏)",
+  "SHOW_HEALTHCHECK": "true",
+  "// SHOW_CAP_ADD": "控制cap_add配置的显示方式: true(显示) 或 false(隐藏)",
+  "SHOW_CAP_ADD": "true",
+  "// SHOW_COMMAND": "控制command配置的显示方式: true(显示) 或 false(隐藏)",
+  "SHOW_COMMAND": "true",
+  "// SHOW_ENTRYPOINT": "控制entrypoint配置的显示方式: true(显示) 或 false(隐藏)",
+  "SHOW_ENTRYPOINT": "true",
+  "// ENV_FILTER_KEYWORDS": "环境变量过滤关键词，逗号分隔。匹配这些关键词的环境变量将被过滤掉",
+  "ENV_FILTER_KEYWORDS": "VERSION",
   "// TZ": "时区设置,如Asia/Shanghai、Europe/London等",
   "TZ": "Asia/Shanghai"
 }

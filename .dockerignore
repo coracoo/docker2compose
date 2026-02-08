@@ -1,105 +1,65 @@
-# Python缓存文件
+# D2C Docker Build Context
+
+# =============================================================================
+# 代码和配置 - 需要复制到镜像中
+# =============================================================================
+# 注意：backend/ 目录下的所有文件都会被复制
+backend/
+requirements.txt
+Dockerfile
+entrypoint.sh
+
+# =============================================================================
+# 排除项 - 这些不会影响镜像构建
+# =============================================================================
+
+# Python 缓存
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
+*.pyc
 
-# 分发/打包
-.Python
+# Python 构建
 build/
-develop-eggs/
 dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
 *.egg
-PIPFILE.lock
+*.egg-info/
+.eggs/
 
-# PyInstaller
-*.manifest
-*.spec
-
-# 单元测试/覆盖率报告
+# 测试和覆盖率
+.pytest_cache/
+.coverage
 htmlcov/
 .tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
+.nox/
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# pyenv
-.python-version
-
-# 环境变量
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# IDE
+# IDE 和编辑器
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-
-# 操作系统
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
 
 # Git
 .git/
 .gitignore
 
-# 日志文件
-*.log
+# 文档和脚本（已在 Dockerfile 中单独复制）
+*.md
+*.sh
+*.ps1
+.github/
+compose/
+config/
 logs/
 
 # 临时文件
 *.tmp
-*.temp
-
-# 备份文件
 *.bak
-backup_*/
+*.log
+*.pid
 
-# 文档
-*.md
-README*
-
-# 开发工具脚本
-*_enhanced_tools.sh
-*_rebuild_and_test.sh
-
-# 测试相关
-test/
-tests/
-
-# 配置文件（如果不需要打包到镜像中）
-# config/
-
-# Compose文件（运行时生成）
-# compose/
+# OS
+Thumbs.db

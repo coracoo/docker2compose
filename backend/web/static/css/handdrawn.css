@@ -1,0 +1,1055 @@
+/* D2C Web UI - Hand-drawn Sketch Style */
+/* 手绘涂鸦风格样式 */
+
+/* 导入手写字体 */
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Kalam:wght@300;400;700&display=swap');
+
+/* 全局样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* CSS 变量 - 手绘风格配色 */
+:root {
+    /* 蜡笔色系 */
+    --crayon-blue: #5B9BD5;
+    --crayon-green: #70AD47;
+    --crayon-yellow: #FFC000;
+    --crayon-orange: #ED7D31;
+    --crayon-red: #C5504B;
+    --crayon-purple: #9966CC;
+    --crayon-pink: #FF6B9D;
+    --crayon-brown: #8B4513;
+    --crayon-teal: #44A08D;
+    
+    /* 纸张色系 */
+    --paper-white: #FDFBF7;
+    --paper-cream: #F5F5DC;
+    --paper-gray: #F0F0F0;
+    --grid-line: #E8E8E8;
+    
+    /* 手绘阴影 */
+    --sketch-shadow: 3px 3px 0 rgba(0,0,0,0.15);
+    --sketch-shadow-lg: 5px 5px 0 rgba(0,0,0,0.15);
+    --sketch-shadow-hover: 5px 5px 0 rgba(0,0,0,0.2);
+    
+    /* 字体 */
+    --font-hand: 'Kalam', 'Patrick Hand', cursive;
+    --font-mono-hand: 'Courier New', monospace;
+}
+
+/* 全局手绘效果 */
+body {
+    font-family: var(--font-hand);
+    background-color: var(--paper-cream);
+    background-image: 
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* 应用容器 - 笔记本纸张效果 */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--paper-white);
+    margin: 20px;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    box-shadow: var(--sketch-shadow-lg);
+    overflow: hidden;
+    border: 3px solid #333;
+    position: relative;
+}
+
+/* 纸张孔效果 */
+.app-container::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 30px;
+    bottom: 30px;
+    width: 20px;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 35px,
+        #ddd 35px,
+        #ddd 45px
+    );
+    opacity: 0.5;
+}
+
+/* 顶部导航栏 - 手绘横幅效果 */
+.header {
+    background: var(--crayon-blue);
+    color: white;
+    padding: 0;
+    border-bottom: 3px solid #333;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.1);
+    position: relative;
+    transform: rotate(-0.3deg);
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 10%;
+    right: 10%;
+    height: 8px;
+    background: var(--crayon-yellow);
+    border: 2px solid #333;
+    border-radius: 4px;
+}
+
+.header-content {
+    display: grid;
+    grid-template-columns: minmax(120px, auto) 1fr minmax(300px, auto);
+    align-items: center;
+    padding: 1rem 2rem 1.5rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 1rem;
+}
+
+/* Logo 样式 */
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    gap: 0.5rem;
+    white-space: nowrap;
+    font-family: var(--font-hand);
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+    transform: rotate(-1deg);
+}
+
+.logo img {
+    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.2));
+}
+
+/* 手绘按钮样式 */
+.btn {
+    padding: 0.6rem 1.2rem;
+    border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: var(--font-hand);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    background: white;
+    box-shadow: var(--sketch-shadow);
+    position: relative;
+}
+
+.btn:hover {
+    transform: translate(-2px, -2px) rotate(-1deg);
+    box-shadow: var(--sketch-shadow-hover);
+}
+
+.btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.15);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 彩色按钮 */
+.btn-primary {
+    background: var(--crayon-blue);
+    color: white;
+}
+
+.btn-success {
+    background: var(--crayon-green);
+    color: white;
+}
+
+.btn-secondary {
+    background: var(--crayon-purple);
+    color: white;
+}
+
+.btn-warning {
+    background: var(--crayon-yellow);
+    color: #333;
+}
+
+.btn-danger {
+    background: var(--crayon-red);
+    color: white;
+}
+
+/* 小按钮 */
+.btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+}
+
+/* 用户下拉菜单 */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 99999 !important;
+    min-width: 160px;
+    padding: 0.5rem 0;
+    margin: 0.25rem 0 0;
+    background: white;
+    border: 2px solid #333;
+    border-radius: 8px;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.15);
+    list-style: none;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    clear: both;
+    font-weight: 400;
+    color: #333 !important;
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.dropdown-item.text-danger {
+    color: #dc3545 !important;
+}
+
+.dropdown-toggle::after {
+    margin-left: 0.5rem;
+}
+
+.btn-outline-light {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+}
+
+.btn-outline-light:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* 主要内容区域 */
+.main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    padding-left: 2.5rem;
+}
+
+/* 左侧边栏 - 容器列表 */
+.sidebar {
+    flex: 0 0 25%;
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+    border-right: 3px dashed var(--crayon-green);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.sidebar::before {
+    content: '📦';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    opacity: 0.3;
+    transform: rotate(15deg);
+}
+
+/* 文件列表侧边栏 */
+.file-list-sidebar {
+    flex: 0 0 25%;
+    background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+    border-right: 3px dashed var(--crayon-orange);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.file-list-sidebar::before {
+    content: '📁';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    opacity: 0.3;
+    transform: rotate(-10deg);
+}
+
+/* 编辑器区域 */
+.editor-section {
+    flex: 0 0 50%;
+    display: flex;
+    flex-direction: column;
+    background: var(--paper-white);
+    position: relative;
+    z-index: 1;
+}
+
+.editor-section::before {
+    content: '✏️';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    opacity: 0.3;
+    transform: rotate(20deg);
+}
+
+/* 搜索框样式 - 手绘风格 */
+.search-box {
+    background: rgba(255,255,255,0.3);
+    border-bottom: 2px dashed var(--crayon-brown);
+    padding: 0.75rem 1rem;
+}
+
+.search-box .input-group {
+    border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    overflow: hidden;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+    background: white;
+}
+
+.search-box .input-group-text {
+    background: var(--crayon-yellow);
+    border: none;
+    border-right: 2px solid #333;
+    color: #333;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+}
+
+.search-box .form-control {
+    border: none;
+    border-radius: 0;
+    font-size: 0.95rem;
+    font-family: var(--font-hand);
+    padding: 0.5rem 0.75rem;
+    background: white;
+}
+
+.search-box .form-control:focus {
+    box-shadow: none;
+    outline: none;
+    background: #fffef8;
+}
+
+.search-box .form-control::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* 高亮样式 */
+mark {
+    background: var(--crayon-yellow);
+    color: #333;
+    padding: 1px 3px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+/* 侧边栏头部 */
+.sidebar-header {
+    padding: 1rem;
+    border-bottom: 2px solid #333;
+    background: rgba(255,255,255,0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 60px;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.3rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-hand);
+    transform: rotate(-1deg);
+}
+
+/* 编辑器头部 */
+.editor-header {
+    padding: 1rem;
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    border-bottom: 2px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 80px;
+}
+
+.editor-title h3 {
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-hand);
+    font-size: 1.3rem;
+    transform: rotate(-1deg);
+}
+
+.editor-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* 文件名输入框 - 手绘输入框 */
+.filename-input {
+    padding: 0.5rem 1rem;
+    border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: var(--font-hand);
+    font-size: 1rem;
+    background: white;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+    min-width: 180px;
+}
+
+.filename-input:focus {
+    outline: none;
+    transform: rotate(-0.5deg);
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.15);
+}
+
+/* 容器分组 - 便利贴效果 */
+.container-groups {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.container-group {
+    background: #FFF9C4;
+    border: 2px solid #333;
+    border-radius: 2px 15px 5px 25px / 25px 5px 15px 2px;
+    margin-bottom: 16px;
+    box-shadow: var(--sketch-shadow);
+    overflow: hidden;
+    transition: all 0.2s ease;
+    transform: rotate(-0.5deg);
+}
+
+.container-group:nth-child(even) {
+    background: #E1F5FE;
+    transform: rotate(0.5deg);
+}
+
+.container-group:nth-child(3n) {
+    background: #F3E5F5;
+    transform: rotate(-0.3deg);
+}
+
+.container-group:hover {
+    transform: translate(-2px, -2px) rotate(0deg);
+    box-shadow: var(--sketch-shadow-hover);
+}
+
+/* 分组头部 */
+.group-header {
+    padding: 12px 16px;
+    background: rgba(0,0,0,0.05);
+    border-bottom: 2px dashed #333;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.group-header:hover {
+    background: rgba(0,0,0,0.08);
+}
+
+.group-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: #333;
+    font-size: 1rem;
+    font-family: var(--font-hand);
+}
+
+.group-badge {
+    background: var(--crayon-red);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 2px solid #333;
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+}
+
+/* 容器项 - 使用标准字体 */
+.container-item {
+    background: white;
+    margin: 8px;
+    padding: 12px;
+    border: 2px solid #333;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.container-item:hover {
+    border-color: var(--crayon-blue);
+    transform: translate(-2px, -2px) rotate(-0.5deg);
+    box-shadow: 3px 3px 0 rgba(91, 155, 213, 0.3);
+}
+
+.container-item.selected {
+    border-color: var(--crayon-green);
+    background: rgba(112, 173, 71, 0.1);
+    box-shadow: 3px 3px 0 rgba(112, 173, 71, 0.4);
+    transform: rotate(0.5deg);
+}
+
+/* 复选框 - 手绘风格 */
+.container-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #333;
+    border-radius: 4px 6px 3px 5px / 5px 3px 6px 4px;
+    position: relative;
+    transition: all 0.2s ease;
+    background: white;
+}
+
+.container-checkbox.checked {
+    background: var(--crayon-green);
+    border-color: #333;
+}
+
+.container-checkbox.checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* 文件列表 - 文件夹效果 */
+.file-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+/* 文件夹样式 */
+.folder-section {
+    margin-bottom: 1rem;
+}
+
+.folder-header {
+    background: var(--crayon-brown);
+    color: white;
+    padding: 12px 16px;
+    border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+    box-shadow: var(--sketch-shadow);
+    font-family: var(--font-hand);
+    font-weight: 700;
+}
+
+.folder-header:hover {
+    transform: translate(-2px, -2px) rotate(-0.5deg);
+    box-shadow: var(--sketch-shadow-hover);
+}
+
+.folder-header .folder-icon {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+.folder-content {
+    background: rgba(255,255,255,0.5);
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    margin-top: 5px;
+    margin-left: 10px;
+    border-left: 3px dashed var(--crayon-brown);
+}
+
+/* 文件项 */
+.file-item {
+    background: white;
+    margin: 8px;
+    padding: 12px;
+    border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+}
+
+.file-item:hover {
+    border-color: var(--crayon-orange);
+    transform: translate(-2px, -2px);
+    box-shadow: 3px 3px 0 rgba(237, 125, 49, 0.3);
+}
+
+.file-item.selected {
+    border-color: var(--crayon-blue);
+    background: rgba(91, 155, 213, 0.1);
+    box-shadow: 3px 3px 0 rgba(91, 155, 213, 0.4);
+}
+
+/* 删除按钮 */
+.delete-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--crayon-red) !important;
+    border: 2px solid #333 !important;
+    color: white !important;
+    padding: 4px 8px !important;
+    font-size: 0.8rem !important;
+    border-radius: 50% !important;
+    min-width: auto !important;
+    height: 28px !important;
+    width: 28px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.2s ease;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+}
+
+.file-item:hover .delete-btn {
+    opacity: 1;
+}
+
+.delete-btn:hover {
+    transform: translateY(-50%) scale(1.1) rotate(-5deg) !important;
+}
+
+/* YAML 编辑器 */
+.editor-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: repeating-linear-gradient(
+        var(--paper-white),
+        var(--paper-white) 24px,
+        #E8F4F8 24px,
+        #E8F4F8 25px
+    );
+}
+
+.yaml-editor {
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 1.5rem;
+    padding-left: 3rem;
+    font-family: 'Monaco', 'Menlo', 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 25px;
+    background: transparent;
+    color: #333;
+    resize: none;
+    outline: none;
+    display: none;
+    cursor: auto;
+    caret-color: #333;
+}
+
+/* 确保文本区域光标可见 */
+.yaml-editor::selection {
+    background: rgba(91, 155, 213, 0.3);
+    color: #000;
+}
+
+.yaml-editor:focus {
+    caret-color: #000;
+}
+
+.yaml-editor.active {
+    display: block;
+}
+
+/* 编辑器占位符 */
+.editor-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--paper-white);
+    z-index: 1;
+}
+
+.placeholder-content {
+    text-align: center;
+    color: #666;
+    font-family: var(--font-hand);
+}
+
+.placeholder-content i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--crayon-blue);
+    opacity: 0.5;
+}
+
+/* 模态框 - 手绘对话框 */
+.modal-content {
+    border: 3px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    box-shadow: var(--sketch-shadow-lg);
+    font-family: var(--font-hand);
+}
+
+.modal-header {
+    background: var(--crayon-blue);
+    color: white;
+    border-bottom: 3px solid #333;
+    border-radius: 250px 12px 0 0 / 12px 220px 0 0;
+    font-family: var(--font-hand);
+}
+
+.modal-title {
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.modal-body {
+    background: var(--paper-white);
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    background: var(--paper-gray);
+    border-top: 2px dashed #333;
+    border-radius: 0 0 220px 12px / 0 0 12px 250px;
+}
+
+/* 表单控件 */
+.form-control, .form-select {
+    border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    padding: 0.6rem 1rem;
+    font-family: var(--font-hand);
+    font-size: 1rem;
+    background: white;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--crayon-blue);
+    box-shadow: 3px 3px 0 rgba(91, 155, 213, 0.3);
+    outline: none;
+    transform: rotate(-0.5deg);
+}
+
+.form-label {
+    font-weight: 700;
+    color: #333;
+    font-family: var(--font-hand);
+    font-size: 1.1rem;
+}
+
+/* 通知组件 - 手绘气泡 */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border: 3px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    box-shadow: var(--sketch-shadow-lg);
+    z-index: 1000;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+    max-width: 350px;
+    font-family: var(--font-hand);
+}
+
+.notification.show {
+    transform: translateX(0) rotate(-1deg);
+}
+
+.notification-content {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.notification.success {
+    border-color: var(--crayon-green);
+    background: #F1F8E9;
+}
+
+.notification.error {
+    border-color: var(--crayon-red);
+    background: #FFEBEE;
+}
+
+.notification.info {
+    border-color: var(--crayon-blue);
+    background: #E3F2FD;
+}
+
+/* 加载遮罩 */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+}
+
+.loading-overlay.show {
+    display: flex;
+}
+
+.loading-spinner {
+    background: white;
+    padding: 2rem;
+    border: 3px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    text-align: center;
+    box-shadow: var(--sketch-shadow-lg);
+    font-family: var(--font-hand);
+}
+
+.loading-spinner i {
+    font-size: 2rem;
+    color: var(--crayon-blue);
+    margin-bottom: 1rem;
+    animation: wiggle 1s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+}
+
+/* 日志容器 */
+.log-container {
+    height: 250px;
+    overflow-y: auto;
+    background: var(--paper-white);
+    border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: var(--font-mono-hand);
+    font-size: 0.85rem;
+    padding: 1rem;
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+.log-line {
+    margin-bottom: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.log-line.error {
+    color: var(--crayon-red);
+    background: rgba(197, 80, 75, 0.1);
+    border-left: 3px solid var(--crayon-red);
+}
+
+.log-line.success {
+    color: var(--crayon-green);
+    background: rgba(112, 173, 71, 0.1);
+    border-left: 3px solid var(--crayon-green);
+}
+
+/* 状态指示器 */
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+}
+
+.status-indicator::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #333;
+    background: #ccc;
+}
+
+.status-indicator.running::before {
+    background: var(--crayon-green);
+    animation: pulse-sketch 1.5s infinite;
+}
+
+.status-indicator.stopped::before {
+    background: var(--crayon-red);
+}
+
+@keyframes pulse-sketch {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .main-content {
+        flex-direction: column;
+    }
+    
+    .sidebar, .file-list-sidebar, .editor-section {
+        flex: none;
+        width: 100%;
+        max-height: 300px;
+    }
+    
+    .editor-section {
+        max-height: none;
+    }
+    
+    .header-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+}
+
+/* 滚动条 - 手绘风格 */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--paper-gray);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--crayon-brown);
+    border: 2px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #A0522D;
+}
+
+/* 便利贴效果 */
+.sticky-note {
+    background: #FFF9C4;
+    border: 2px solid #333;
+    box-shadow: var(--sketch-shadow);
+    transform: rotate(-1deg);
+    padding: 1rem;
+}
+
+.sticky-note.yellow { background: #FFF9C4; }
+.sticky-note.blue { background: #E1F5FE; }
+.sticky-note.pink { background: #FCE4EC; }
+.sticky-note.green { background: #E8F5E9; }
+
+/* 登录页面 */
+.login-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--crayon-blue), var(--crayon-purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.login-box {
+    background: var(--paper-white);
+    border: 3px solid #333;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: var(--sketch-shadow-lg);
+    transform: rotate(-1deg);
+}
+
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-family: var(--font-hand);
+    font-size: 2rem;
+}
+
+.login-hint {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+}

@@ -7,11 +7,9 @@
 
 ## 前言
 
-本工具用于读取极空间私有云系统中的存量Docker容器信息，自动生成对应的docker-compose.yaml文件。
+本工具用于读取 NAS 中存量 Docker 容器信息，自动生成对应的 `docker-compose.yaml` 文件。
 
 它会根据容器之间的网络关系（自定义网络或link连接）将相关容器分组，并为每组容器生成一个独立的docker-compose.yaml文件。
-
-理论上所有NAS都可以用，但是有些特意删除的功能，比如命令、性能限制、endpiont等，由于极空间不支持，所以删除了。
 
 # 我的仓库
 
@@ -19,7 +17,7 @@
 
 **2️⃣** ： docker转compose：[https://github.com/coracoo/docker2compose](https://github.com/coracoo/docker2compose)
 
-**3️⃣** ： 容器部署iSCSI，支持绿联极空间飞牛：[https://github.com/coracoo/d-tgtadm/](https://github.com/coracoo/d-tgtadm/)
+**3️⃣** ： 容器部署iSCSI：[https://github.com/coracoo/d-tgtadm/](https://github.com/coracoo/d-tgtadm/)
 
 **4️⃣** ： 容器端口检查工具： [https://github.com/coracoo/DockPorts/](https://github.com/coracoo/DockPorts)
 
@@ -32,6 +30,21 @@
 ### 微信公众号：
 
 ![关注](https://github.com/user-attachments/assets/9a1c4de0-2f08-413f-ab7f-d7d463af1698)
+
+-------------------------------------
+
+## 🆕 v2.0 版本更新
+
+### 新增功能
+- **🔐 用户系统**：新增完整的用户系统，默认账号 `admin/admin123`，保护信息安全
+- **📊 调度器**：取消了 Cron&Python调度器 并行的方式，统一使用 Python 调度器
+- **📝 日志**：调度器执行日志记录到 `/app/logs/scheduler.log`
+- **🎨 前端**：采用了手工画风格的界面；增加搜索功能；优化默认排序
+- **🙌 配置参数**：增加了`关键词`过滤；优化了网络、健康检测、入口点、命令、权限的展示选择，现在可以更自由的配置生成的文档
+
+### 代码优化
+- 清理冗余文件，减少项目体积
+- 优化 GitHub Actions 工作流
 
 -------------------------------------
 
@@ -54,7 +67,7 @@
   - 特权模式
   - 硬件设备挂载
   - cap_add 能力
-  - command和entrypoint(在ZOS模式下不生成)
+  - command和entrypoint
   - 健康检测
   - 其他配置等等
 
@@ -90,10 +103,6 @@
 
 
 ### 配置文件说明 (/app/config.json)
-
-- `NAS`: 指定NAS系统类型
-  - `debian`: 默认值，生成完整配置
-  - `zos`: 极空间系统，不生成command和entrypoint配置
 
 - `CRON`: 定时执行配置，支持5位\6位Cron规则，示例：`0 2 * * *`（每天凌晨2点执行）
   - 默认值：`0 */12 * * *`（每天0点起，每天12小时执行一次）
@@ -151,17 +160,14 @@ docker run -itd --name d2c \
   -v /{path}/d2c/config:/app/config \
   -p 5000:5000 \
   -e TZ=Asia/Shanghai \
-  crpi-xg6dfmt5h2etc7hg.cn-hangzhou.personal.cr.aliyuncs.com/cherry4nas/d2c:latest
-  # 或使用github镜像源：ghcr.io/coracoo/d2c:latest
+  ghcr.io/coracoo/d2c:latest
 ```
 
 **🔻docker compose启动**
 ```yaml
 services:
   d2c:
-    image: crpi-xg6dfmt5h2etc7hg.cn-hangzhou.personal.cr.aliyuncs.com/cherry4nas/d2c:latest
-    # github镜像源
-    # image: ghcr.io/coracoo/d2c:latest
+    image: ghcr.io/coracoo/d2c:latest
     container_name: d2c
     ports:
       - "5000:5000"  # Web UI端口
@@ -230,9 +236,8 @@ python -m pytest tests/ -v
 项目支持自动构建多平台Docker镜像并推送到Docker Hub：
 
 ```bash
-- **Docker Hub**: `jackie264/docker2compose`
-- **GitHub Container Registry**: `ghcr.io/coracoo/d2c`
-- **阿里云镜像仓库**: `crpi-xg6dfmt5h2etc7hg.cn-hangzhou.personal.cr.aliyuncs.com/cherry4nas/d2c`
+- **Docker Hub**: `coracoo/docker2compose`
+- **GitHub Container Registry**: `ghcr.io/coracoo/docker2compose`
 ```
 
 ### 4.1 支持的平台
