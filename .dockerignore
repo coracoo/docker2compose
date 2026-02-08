@@ -47,8 +47,6 @@ htmlcov/
 
 # 文档和脚本（已在 Dockerfile 中单独复制）
 *.md
-!entrypoint.sh
-*.sh
 *.ps1
 .github/
 compose/
