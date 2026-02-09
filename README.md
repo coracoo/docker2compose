@@ -90,14 +90,13 @@
 
 
 **🔻项目首页**
-
+<img width="1859" height="903" alt="总览" src="https://github.com/user-attachments/assets/d43eec83-16da-4a6a-9fff-11ee064a109d" />
 
 **🔻可视化配置编辑**
-
+<img width="1838" height="897" alt="系统设置" src="https://github.com/user-attachments/assets/81a52a1b-7621-4dc5-92fb-c3097256659e" />
 
 **🔻定时任务管理**
-
-
+<img width="1847" height="872" alt="定时任务" src="https://github.com/user-attachments/assets/37c0a299-39bd-4456-9cf1-537afd31f61c" />
 
 ### 配置文件说明 (/app/config.json)
 
@@ -331,3 +330,4 @@ python -m pytest tests/ -v
 - 完善日志输出内容；完善README.md
 - 创建Github Action，自动构建并推送到github和阿里云
 - 适配 amd64/arm64/arm7 架构
+
