@@ -37,7 +37,7 @@
 
 ### 新增功能
 - **🔐 用户系统**：新增完整的用户系统，默认账号 `admin/admin123`，保护信息安全
-- **📊 调度器**：取消了 Cron&Python调度器 并行的方式，统一使用 Python 调度器
+- **📊 调度器**：取消了 Cron&Python调度器 并行的方式，统一使用 Python 调度器；设置后需要手动先开启定时任务；
 - **📝 日志**：调度器执行日志记录到 `/app/logs/scheduler.log`
 - **🎨 前端**：采用了手工画风格的界面；增加搜索功能；优化默认排序
 - **🙌 配置参数**：增加了`关键词`过滤；优化了网络、健康检测、入口点、命令、权限的展示选择，现在可以更自由的配置生成的文档
@@ -91,15 +91,12 @@
 
 **🔻项目首页**
 
-![QQ_1751597270453](https://github.com/user-attachments/assets/d1b40dd7-408b-4f87-9756-a35ffe74a5da)
 
 **🔻可视化配置编辑**
 
-![QQ_1751597299766](https://github.com/user-attachments/assets/beff1d61-e495-491f-a1db-62cf59d5ce8d)
 
 **🔻定时任务管理**
 
-![QQ_1751597315617](https://github.com/user-attachments/assets/6eec9ece-e670-4ddb-b28e-bf301d22e8e7)
 
 
 ### 配置文件说明 (/app/config.json)
@@ -153,22 +150,22 @@
 
 **🔻docker cli启动**
 ```bash
-docker run -itd --name d2c \
+docker run -itd --name docker2compose \
   -v /var/run/docker.sock:/var/run/docker.sock:ro \
   -v /{path}/d2c/compose:/app/compose \
   -v /{path}/d2c/logs:/app/logs \
   -v /{path}/d2c/config:/app/config \
   -p 5000:5000 \
   -e TZ=Asia/Shanghai \
-  ghcr.io/coracoo/d2c:latest
+  coracoo/docker2compose:latest
 ```
 
 **🔻docker compose启动**
 ```yaml
 services:
   d2c:
-    image: ghcr.io/coracoo/d2c:latest
-    container_name: d2c
+    image: coracoo/docker2compose:latest
+    container_name: docker2compose
     ports:
       - "5000:5000"  # Web UI端口
     environment:
