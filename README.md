@@ -171,6 +171,7 @@ docker run -itd --name docker2compose \
   -v /{path}/d2c/config:/app/config \
   -p 5000:5000 \
   -e TZ=Asia/Shanghai \
+  # -e DOCKER_API_VERSION=1.41 \ # 群晖等 docker版本比较老的，加这个参数控制 docker api 版本
   coracoo/docker2compose:latest
 ```
 
@@ -184,9 +185,11 @@ services:
       - "5000:5000"  # Web UI端口
     environment:
       - TZ=Asia/Shanghai  # 可选，时区设置
+      - DOCKER_API_VERSION=1.41 # 群晖等 docker版本比较老的，加这个参数控制 docker api 版本
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /{path}/d2c/compose:/app/compose
       - /{path}/d2c/logs:/app/logs
       - /{path}/d2c/config:/app/config
 ```
+
